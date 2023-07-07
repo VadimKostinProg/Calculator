@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Calculator.Calculator;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calculator
 {
-    public class ExpresionCalculator
+    public class ExpresionCalculator : ICalculator
     {
         public void ComputeBrackets(ref string expresion)
         {
@@ -17,7 +18,7 @@ namespace Calculator
                     int startIndex = expresion.IndexOf('(');
                     int length = LengthInBreckets(expresion, startIndex);
                     string newExpresion = expresion.Substring(startIndex + 1, length - 1);
-                    double subResult = Compute(newExpresion);
+                    double subResult = Calculate(newExpresion);
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < expresion.Length; i++)
                     {
@@ -161,7 +162,7 @@ namespace Calculator
                 isFirst = false;
             }
         }
-        public double Compute(string expresion)
+        public double Calculate(string expresion)
         {
             double result = 0;
 

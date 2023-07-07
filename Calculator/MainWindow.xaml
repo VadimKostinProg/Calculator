@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Calculator"
         mc:Ignorable="d"
-        Title="Calculator" Height="800" Width="800" MinHeight="800" MinWidth="800" FontSize="48" WindowStartupLocation="CenterScreen">
+        Title="Calculator" 
+        Height="800" Width="800" 
+        MinHeight="800" MinWidth="800" 
+        FontSize="48" 
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

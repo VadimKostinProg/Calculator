@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
+using Calculator.Calculator;
 
 namespace Calculator
 {
@@ -21,9 +22,15 @@ namespace Calculator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool IsErrorShown = false;
+
+        private readonly ICalculator calculator;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            calculator = new ExpresionCalculator();
         }
 
         void Button_Cleare(object sender, RoutedEventArgs e)
@@ -32,18 +39,25 @@ namespace Calculator
         }
         private void Button_Delete(object sender, RoutedEventArgs e)
         {
-            try
+            string expression = TextBlock.Text;
+
+            if (string.IsNullOrEmpty(expression))
             {
-                string toDelete = TextBlock.Text;
-                StringBuilder sb = new StringBuilder();
-                int AmountToDelte = toDelete[toDelete.Length - 1] == ' ' ? 3 : 1;
-                for (int i = 0; i < toDelete.Length - AmountToDelte; i++) sb.Append(toDelete[i]);
-                TextBlock.Text = sb.ToString();
+                return;
             }
-            catch(Exception ex) { }
+
+            int AmountOfCharsToDelte = expression[expression.Length - 1] == ' ' ? 3 : 1;
+            string newExpression = expression.Substring(0, expression.Length - AmountOfCharsToDelte);
+            TextBlock.Text = newExpression;
         }
         void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (IsErrorShown)
+            {
+                TextBlock.Text = String.Empty;
+                IsErrorShown = false;
+            }
+
             TextBlock.Text += ((Button)e.OriginalSource).Content.ToString();
         }
 
@@ -52,11 +66,12 @@ namespace Calculator
             string result;
             try
             {
-                result = new ExpresionCalculator().Compute(TextBlock.Text).ToString();
+                result = this.calculator.Calculate(TextBlock.Text).ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result = "Error!";
+                IsErrorShown = true;
             }
             TextBlock.Text = result;
         }
@@ -67,13 +82,14 @@ namespace Calculator
             string resultString;
             try
             {
-                result = new ExpresionCalculator().Compute(TextBlock.Text);
+                result = new ExpresionCalculator().Calculate(TextBlock.Text);
                 result = 1 / result;
                 resultString = result.ToString();
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 resultString = "Error!";
+                IsErrorShown = true;
             }
             TextBlock.Text = resultString;
         }
@@ -84,13 +100,14 @@ namespace Calculator
             string resultString;
             try
             {
-                result = new ExpresionCalculator().Compute(TextBlock.Text);
+                result = new ExpresionCalculator().Calculate(TextBlock.Text);
                 result = result / 100;
                 resultString = result.ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 resultString = "Error!";
+                IsErrorShown = true;
             }
             TextBlock.Text = resultString;
         }
