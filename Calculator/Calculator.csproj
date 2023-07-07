@@ -63,6 +63,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Calculator\Calculator.cs" />
     <Compile Include="Calculator\ICalculator.cs" />
     <Compile Include="Stack.cs" />
     <Page Include="MainWindow.xaml">
