@@ -3,69 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace Calculator.Calculator
+namespace Calculator.ExpressionTreeCalculator
 {
     /// <summary>
-    /// Node of Expression Tree
+    /// Class that calculates the result of expression tree.
     /// </summary>
-    public class TNode
+    public class TreeCalculator
     {
-        public string Data { get; set; }
-        public TNode Left { get; set; }
-        public TNode Right { get; set; }
-
-        public TNode(string symbol, TNode left = null, TNode right = null)
-        {
-            Data = symbol;
-            Left = left;
-            Right = right;
-        }
-    }
-
-    /// <summary>
-    /// Calculator that computes result of expression with method of Expression Tree.
-    /// </summary>
-    public class Calculator : ICalculator
-    {
-        private TNode _root = null;
-
-        public double Calculate(string expression)
-        {
-            BreakExpressionIntoTheTree(expression);
-
-            return CalculateNode(_root);
-        }
-
-        #region CREATING EXPRESSION TREE LOGIC
-        // Method for breaking expession into the Expression Tree
-        private TNode BreakExpressionIntoTheTree(string expression)
-        {
-            var postfixExpression = ToPostfixExpression(expression);
-
-            return null;
-        }
-
-        private List<string> ToPostfixExpression(string expression)
-        {
-            Stack<string> operatorsStack = new Stack<string>();
-            List<string> postfixExpression = new List<string>();
-
-            string[] expressionArr = expression.Split(new char[] { ' ' });
-
-            foreach(string item in expressionArr)
-            {
-
-            }
-
-            return postfixExpression;
-        }
-        #endregion
-
-        #region CALCULATION TREE LOGIC
-        // Method for calculate result of the node calculation recursivly
-        private double CalculateNode(TNode node)
+        /// <summary>
+        /// Method for calculation result of expressionTree.
+        /// </summary>
+        /// <param name="node">Node of expression tree to calculate result.</param>
+        /// <returns>Result of epression.</returns>
+        public double CalculateNode(TNode node)
         {
             //If all nodes are null - node is leaf of tree, that`s why it`s data is an operand
             if (node.Left == null && node.Right == null)
@@ -80,9 +31,9 @@ namespace Calculator.Calculator
             }
 
             //If only right child of node is not null it`s data is unary operator
-            if (node.Left == null)
+            if (node.Right == null)
             {
-                double childResult = CalculateNode(node.Right);
+                double childResult = CalculateNode(node.Left);
 
                 return CalculateUnaryOperator(node.Data, childResult);
             }
@@ -92,6 +43,16 @@ namespace Calculator.Calculator
             double rightChildResult = CalculateNode(node.Right);
 
             return CalculateArithemticOperator(node.Data, leftChildResult, rightChildResult);
+        }
+
+        private int Factorial(int number)
+        {
+            if (number < 0)
+                throw new ArgumentException("Error! Cannot count factorial of negative number");
+
+            if(number == 1) return 1;
+
+            return number * Factorial(number - 1);
         }
 
         //Method for calculate result of unary operator
@@ -124,6 +85,13 @@ namespace Calculator.Calculator
                     break;
                 case "sqrt":
                     result = Math.Sqrt(value);
+                    break;
+                case "!":
+                    int num;
+                    bool parseResult = int.TryParse(value.ToString(), out num);
+                    if (!parseResult)
+                        throw new ArgumentException("Error! Cannot count factorial of double");
+                    result = Factorial(num);
                     break;
                 default:
                     throw new ArgumentException("Error! Unknown operator");
@@ -158,6 +126,5 @@ namespace Calculator.Calculator
 
             return result;
         }
-        #endregion
     }
 }

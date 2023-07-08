@@ -63,8 +63,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Calculator\Calculator.cs" />
-    <Compile Include="Calculator\ICalculator.cs" />
+    <Compile Include="ExpressionTreeCalculator\Calculator.cs" />
+    <Compile Include="ExpressionTreeCalculator\ICalculator.cs" />
+    <Compile Include="ExpressionTreeCalculator\PostfixConverter.cs" />
+    <Compile Include="ExpressionTreeCalculator\Precedence.cs" />
+    <Compile Include="ExpressionTreeCalculator\TNode.cs" />
+    <Compile Include="ExpressionTreeCalculator\TreeCalculator.cs" />
+    <Compile Include="ExpressionTreeCalculator\TreeBuilder.cs" />
     <Compile Include="Stack.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

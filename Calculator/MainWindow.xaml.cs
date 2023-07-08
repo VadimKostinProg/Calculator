@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
-using Calculator.Calculator;
+using Calculator.ExpressionTreeCalculator;
 
 namespace Calculator
 {
@@ -30,7 +30,7 @@ namespace Calculator
         {
             InitializeComponent();
 
-            calculator = new ExpresionCalculator();
+            calculator = new ExpressionTreeCalculator.Calculator();
         }
 
         void Button_Cleare(object sender, RoutedEventArgs e)
@@ -68,9 +68,9 @@ namespace Calculator
             {
                 result = this.calculator.Calculate(TextBlock.Text).ToString();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                result = "Error!";
+                result = ex.Message;
                 IsErrorShown = true;
             }
             TextBlock.Text = result;
@@ -82,13 +82,13 @@ namespace Calculator
             string resultString;
             try
             {
-                result = new ExpresionCalculator().Calculate(TextBlock.Text);
+                result = this.calculator.Calculate(TextBlock.Text);
                 result = 1 / result;
                 resultString = result.ToString();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                resultString = "Error!";
+                resultString = ex.Message;
                 IsErrorShown = true;
             }
             TextBlock.Text = resultString;
@@ -100,13 +100,13 @@ namespace Calculator
             string resultString;
             try
             {
-                result = new ExpresionCalculator().Calculate(TextBlock.Text);
+                result = this.calculator.Calculate(TextBlock.Text);
                 result = result / 100;
                 resultString = result.ToString();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                resultString = "Error!";
+                resultString = ex.Message;
                 IsErrorShown = true;
             }
             TextBlock.Text = resultString;
