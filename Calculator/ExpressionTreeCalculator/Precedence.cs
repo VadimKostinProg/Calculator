@@ -25,8 +25,7 @@ namespace Calculator.ExpressionTreeCalculator
             { "log", 3 },
             { "lg", 3 },
             { "ln", 3 },
-            { "sqrt", 3 },
-            { "!", 3 }
+            { "sqrt", 3 }
         };
     }
 }

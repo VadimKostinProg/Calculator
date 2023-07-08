@@ -66,8 +66,6 @@ namespace Calculator.ExpressionTreeCalculator
 
             var tokens = SplitExpression(expression);
 
-            Console.WriteLine(string.Join(" ", tokens));
-
             foreach (string token in tokens)
             {
                 if (IsOperator(token))
@@ -77,6 +75,10 @@ namespace Calculator.ExpressionTreeCalculator
                         postfix.Add(operatorStack.Pop());
                     }
                     operatorStack.Push(token);
+                }
+                else if (token == "!")
+                {
+                    postfix.Add(token);
                 }
                 else if (IsFunction(token))
                 {

@@ -28,11 +28,22 @@ namespace Calculator.ExpressionTreeCalculator
                     TNode node = new TNode(token, argument);
                     stack.Push(node);
                 }
+                else if (token == "!")
+                {
+                    TNode operand = stack.Pop();
+                    TNode node = new TNode(token, operand);
+                    stack.Push(node);
+                }
                 else
                 {
                     TNode node = new TNode(token);
                     stack.Push(node);
                 }
+            }
+
+            if (stack.Count > 1)
+            {
+                throw new ArgumentException("Invalid expression");
             }
 
             return stack.Pop();
